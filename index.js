@@ -29,6 +29,11 @@ async function run() {
             const result = await reviewsCollection.insertOne(review);
             res.json(result);
         });
+        app.get('/reviews', async (req, res) => {
+            const cursor = reviewsCollection.find({});
+            const reviews = await cursor.toArray();
+            res.send(reviews);
+        });
 
         app.get('/users/:email', async (req, res) => {
             const email = req.params.email;
