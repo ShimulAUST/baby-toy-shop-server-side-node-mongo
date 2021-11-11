@@ -18,11 +18,16 @@ async function run() {
         const database = client.db('baby_toys_shop');
         const usersCollection = database.collection('users');
         const productsCollection = database.collection('products');
-
+        const reviewsCollection = database.collection('reviews');
         app.get('/products', async (req, res) => {
             const cursor = productsCollection.find({});
             const products = await cursor.toArray();
             res.send(products);
+        });
+        app.post('/reviews', async (req, res) => {
+            const review = req.body;
+            const result = await reviewsCollection.insertOne(review);
+            res.json(result);
         });
 
         app.get('/users/:email', async (req, res) => {
