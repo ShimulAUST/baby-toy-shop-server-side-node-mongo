@@ -17,6 +17,14 @@ async function run() {
         console.log('DB Connected');
         const database = client.db('baby_toys_shop');
         const usersCollection = database.collection('users');
+        const productsCollection = database.collection('products');
+
+        app.get('/products', async (req, res) => {
+            const cursor = productsCollection.find({});
+            const products = await cursor.toArray();
+            res.send(products);
+        });
+
         app.get('/users/:email', async (req, res) => {
             const email = req.params.email;
             const query = { email: email };
@@ -27,6 +35,7 @@ async function run() {
             }
             res.json({ admin: isAdmin });
         });
+
         app.post('/users', async (req, res) => {
             const user = req.body;
             const result = await usersCollection.insertOne(user);
