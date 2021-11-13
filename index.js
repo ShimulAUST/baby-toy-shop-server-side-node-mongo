@@ -10,7 +10,16 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 const serviceAccount = {
-
+    "type": process.env.AUTH_SERVICE_TYPE,
+    "project_id": process.env.AUTH_PROJECT_ID,
+    "private_key_id": process.env.AUTH_PRIVATE_KEY_ID,
+    "private_key": process.env.AUTH_PRIVATE_KEY,
+    "client_email": process.env.AUTH_CLIENT_EMAIL,
+    "client_id": process.env.AUTH_CLIENT_ID,
+    "auth_uri": process.env.AUTH_URI,
+    "token_uri": process.env.AUTH_TOKEN_URI,
+    "auth_provider_x509_cert_url": process.env.AUTH_PROVIDER_X,
+    "client_x509_cert_url": process.env.AUTH_CLIENT_CERT_URL
 };
 
 admin.initializeApp({
