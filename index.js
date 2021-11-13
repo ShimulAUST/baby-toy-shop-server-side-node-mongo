@@ -19,6 +19,7 @@ async function run() {
         const usersCollection = database.collection('users');
         const productsCollection = database.collection('products');
         const reviewsCollection = database.collection('reviews');
+        const ordersCollection = database.collection('orders');
         app.get('/products', async (req, res) => {
             const cursor = productsCollection.find({});
             const products = await cursor.toArray();
@@ -29,7 +30,14 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const product = await productsCollection.findOne(query);
             res.json(product);
-        })
+        });
+        app.post('/orders', async (req, res) => {
+            const orders = req.body;
+            console.log(orders);
+            const result = await ordersCollection.insertOne(orders);
+            console.log(result);
+            res.send(result);
+        });
         app.post('/reviews', async (req, res) => {
             const review = req.body;
             const result = await reviewsCollection.insertOne(review);
