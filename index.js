@@ -46,6 +46,11 @@ async function run() {
             const product = await productsCollection.findOne(query);
             res.json(product);
         });
+        app.post('/products', async (req, res) => {
+            const service = req.body;
+            const result = await productsCollection.insertOne(service);
+            res.send(result);
+        });
         app.post('/orders', async (req, res) => {
             const orders = req.body;
             console.log(orders);
@@ -68,7 +73,7 @@ async function run() {
         //update order status 
         app.put('/orders/:id', async (req, res) => {
             const id = req.params.id;
-            const updateUser = "approved";
+            const updateUser = "shipped";
             const filter = { _id: ObjectId(id) };
             const options = { upsert: true };
             const updateDoc = {
